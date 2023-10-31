@@ -1,0 +1,10 @@
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\WorkTest.exe.config
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\WorkTest.exe
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\WorkTest.pdb
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.AssemblyReference.cache
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.Form1.resources
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.Properties.Resources.resources
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.GenerateResource.cache
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.CoreCompileInputs.cache
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.exe
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.pdb
