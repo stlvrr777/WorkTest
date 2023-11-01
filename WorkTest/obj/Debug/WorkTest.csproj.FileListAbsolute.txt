@@ -41,3 +41,4 @@ C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\System.ValueTuple.xml
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.SuggestedBindingRedirects.cache
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.exe.config
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.CopyComplete
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.worker_add.resources

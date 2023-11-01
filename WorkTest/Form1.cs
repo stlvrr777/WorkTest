@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,8 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WorkTest
 {
@@ -28,6 +31,7 @@ namespace WorkTest
                 nCon.Open();
             }
         }
+
 
         public DataTable getdata(string sql)
         {
@@ -51,20 +55,114 @@ namespace WorkTest
 
         private void button_changeworkers_Click(object sender, EventArgs e)
         {
-           
+            connection();
+            nCmd = new NpgsqlCommand();
+            nCmd.Connection = nCon;
+
+            string sqlQuerry_a = "UPDATE workers SET fio = @fio, tab_num = @tab_num, post = @post, " +
+                 "subdivision = (SELECT id FROM subdivisions WHERE name = @subdivision), " +
+                 "email = @email, phone = @phone, date_in = @date_in, " +
+                 $"status = (CAST(@status as \"state_type\"))";
+            string sqlQuerry_b = ", date_out = @date_out";
+            string sqlQuerry_c = " WHERE id = @id";
+            string sqlQuerry;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@fio", NpgsqlDbType.Text));
+            nCmd.Parameters["@fio"].Value = textBox_fio.Text;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@tab_num", NpgsqlDbType.Text));
+            nCmd.Parameters["@tab_num"].Value = textBox_tab.Text;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@post", NpgsqlDbType.Text));
+            nCmd.Parameters["@post"].Value = textBox_dolzh.Text;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@subdivision", NpgsqlDbType.Text));
+            nCmd.Parameters["@subdivision"].Value = comboBox_podr.Text;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@email", NpgsqlDbType.Text));
+            nCmd.Parameters["@email"].Value = textBox_mail.Text;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@phone", NpgsqlDbType.Text));
+            nCmd.Parameters["@phone"].Value = textBox_phone.Text;   
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@date_in", NpgsqlDbType.Date));
+            nCmd.Parameters["@date_in"].Value = dateTimePicker_in.Value;
+
+            if (textBox_date_out.Visible)
+            {
+                sqlQuerry = sqlQuerry_a + sqlQuerry_c;
+                //nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
+                //nCmd.Parameters["@date_out"].Value = null;
+            }
+            else
+            {
+                nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
+                nCmd.Parameters["@date_out"].Value = dateTimePicker_out.Value;
+                sqlQuerry = sqlQuerry_a + sqlQuerry_b + sqlQuerry_c;
+            }
+            
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
+            nCmd.Parameters["@status"].Value = comboBox_status.Text;
+
+            nCmd.Parameters.Add(new NpgsqlParameter("@id", NpgsqlDbType.Integer));
+            nCmd.Parameters["@id"].Value = int.Parse(textBox_id.Text);
+
+            nCmd.CommandText = sqlQuerry;
+
+            NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+            MessageBox.Show("Данные успешно обновлены.", "Успех", MessageBoxButtons.OK);
+
+            refreshGrid();
+
+            //updateSql(sqlQuerry);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             connection();
+            refreshGrid();
+        }
+
+        public void refreshGrid()
+        {
             DataTable dtgetdata = new DataTable();
-            dtgetdata = getdata("select a.id, a.fio as ФИО, a.tab_num as \"Таб.№\", a.post as Должность, b.name as Подразделение, a.email as Email, a.phone as Телефон, a.date_in as \"Дата приема\", a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers a left join subdivisions b on a.subdivision = b.id order by id asc;");
+
+            dtgetdata = getdata("select a.id, a.fio as ФИО, a.tab_num as \"Таб.№\", a.post as Должность, " +
+                "b.name as Подразделение, a.email as Email, a.phone as Телефон, a.date_in as \"Дата приема\", " +
+                "a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers a left join " +
+                "subdivisions b on a.subdivision = b.id order by id asc;");
             dataGridWorkers.DataSource = dtgetdata;
 
-           
 
+            comboBox_podr.Items.Clear();
+            comboBox_status.Items.Clear();
+            comboBox_sort.Items.Clear();
+            comboBox_stats.Items.Clear();
 
+            comboBox_stats.Items.Add("Все".ToString());
+            comboBox_stats.SelectedIndex = 0;
 
+            dtgetdata = getdata("SELECT DISTINCT name FROM subdivisions ORDER BY name");
+            if (dtgetdata.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtgetdata.Rows)
+                {
+                    comboBox_podr.Items.Add(row["name"].ToString());
+                    comboBox_sort.Items.Add(row["name"].ToString());
+                    comboBox_stats.Items.Add(row["name"].ToString());
+                }
+            }
+
+            dtgetdata = getdata("SELECT unnest(enum_range(NULL::state_type))::text as name;");
+            if (dtgetdata.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtgetdata.Rows)
+                {
+                    comboBox_status.Items.Add(row["name"].ToString());
+                }
+            }
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -76,12 +174,15 @@ namespace WorkTest
         {
             if (e.RowIndex >= 0)
             {
-                textBox_id.ReadOnly = false;
+                //textBox_id.ReadOnly = false;
                 textBox_fio.ReadOnly = false;
                 textBox_tab.ReadOnly = false;
                 textBox_dolzh.ReadOnly = false;
                 textBox_phone.ReadOnly = false;
                 textBox_mail.ReadOnly = false;
+                comboBox_podr.Enabled = true;
+                comboBox_status.Enabled = true;
+                dateTimePicker_in.Enabled = true;
 
 
                 DataGridViewRow selectedRow = dataGridWorkers.Rows[e.RowIndex];            
@@ -92,7 +193,7 @@ namespace WorkTest
                 comboBox_podr.Text = selectedRow.Cells["Подразделение"].Value.ToString();
                 textBox_mail.Text = selectedRow.Cells["Email"].Value.ToString();
                 textBox_phone.Text = selectedRow.Cells["Телефон"].Value.ToString();
-                string dateValue = selectedRow.Cells["Дата приема"].Value.ToString(); // Замените "название_столбца_даты" на актуальное имя столбца с датой
+                string dateValue = selectedRow.Cells["Дата приема"].Value.ToString(); 
                 DateTime datein, dateout;
 
                 if (DateTime.TryParse(dateValue, out datein))
@@ -134,15 +235,169 @@ namespace WorkTest
 
         private void textBox_date_out_DoubleClick(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Вы собираетесь уволить сотрудника! Вы уверены? Отменить действие невозможно", "ВНИМАНИЕ", MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.Yes)
+            if (string.IsNullOrWhiteSpace(textBox_id.Text))
             {
-                // Выбран вариант "Да"
-                // Добавьте здесь код для обработки варианта "Да"
-                textBox_date_out.Visible = false;
-                dateTimePicker_out.Visible = true;
-            }      
+
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Вы собираетесь уволить сотрудника! Вы уверены? Отменить действие невозможно", "ВНИМАНИЕ", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Выбран вариант "Да"
+                    // Добавьте здесь код для обработки варианта "Да"
+                    textBox_date_out.Visible = false;
+                    dateTimePicker_out.Visible = true;
+                }
+            }
+                 
+        }
+
+        private void button_addworker_Click(object sender, EventArgs e)
+        {
+            worker_add newForm = new worker_add();
+            newForm.ShowDialog(); 
+        }
+
+        private void button_refresh_Click(object sender, EventArgs e)
+        {
+            refreshGrid();
+        }
+
+        private void button_delete_worker_Click(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrWhiteSpace(textBox_id.Text))
+            {
+
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Вы собираетесь удалить данные о сотруднике! Вы уверены? Отменить действие невозможно", "ВНИМАНИЕ", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    string sql = "DELETE FROM workers WHERE id = @id";
+                    connection();
+                    nCmd = new NpgsqlCommand();
+                    nCmd.Connection = nCon;
+
+
+                    nCmd.Parameters.Add(new NpgsqlParameter("@id", NpgsqlDbType.Integer));
+                    nCmd.Parameters["@id"].Value = int.Parse(textBox_id.Text);
+
+                    nCmd.CommandText = sql;
+
+                    NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+                    MessageBox.Show("Данные удалены.", "Успех", MessageBoxButtons.OK);
+
+                    refreshGrid();
+                }
+            }
+            
+
+        }
+
+        private void button_search_Click(object sender, EventArgs e)
+        {
+            DataTable dtgetdata = new DataTable();
+
+            dtgetdata = getdata($"select a.id, a.fio as ФИО, a.tab_num as \"Таб.№\", a.post as Должность, b.name as Подразделение, a.email as Email, a.phone as Телефон, a.date_in as \"Дата приема\", a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers a left join subdivisions b on a.subdivision = b.id where a.fio ILIKE '%{textBox_search.Text}%' OR a.tab_num ILIKE '%{textBox_search.Text}%' order by id asc;");
+            dataGridWorkers.DataSource = dtgetdata;
+        }
+
+        private void comboBox_sort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable dtgetdata = new DataTable();
+
+            dtgetdata = getdata($"select a.id, a.fio as ФИО, a.tab_num as \"Таб.№\", a.post as Должность, b.name as Подразделение, a.email as Email, a.phone as Телефон, a.date_in as \"Дата приема\", a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers a left join subdivisions b on a.subdivision = b.id where b.name = '{comboBox_sort.Text}' order by id asc;");
+            dataGridWorkers.DataSource = dtgetdata;
+        }
+
+        private void button_showstats_Click(object sender, EventArgs e)
+        {
+            DataTable dtgetdata = new DataTable();
+
+            string querry_a = "select 'Устроились' AS Статус, a.id, a.fio as ФИО, a.tab_num as \"Таб.№\", " +
+                "a.post as Должность, b.name as Подразделение, a.email as Email, a.phone as Телефон, a.date_in as" +
+                " \"Дата приема\", a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers " +
+                $"a left join subdivisions b on a.subdivision = b.id WHERE date_in BETWEEN '{dateTimePicker1.Value}' AND '{dateTimePicker2.Value}' ";
+
+            string querry_b = "UNION ALL select 'Уволились' AS Статус, NULL AS id, NULL AS ФИО, NULL AS \"Таб.№\", " +
+                "NULL AS Должность, NULL AS Подразделение, NULL AS Email, NULL AS Телефон, NULL AS" +
+                " \"Дата приема\", NULL AS \"Дата увольнения\", NULL AS \"Состояние записи\" ";
+
+
+            string querry_c = $"UNION ALL select 'Уволились' AS Статус, a.id, a.fio as ФИО, a.tab_num as \"Таб.№\", " +
+                "a.post as Должность, b.name as Подразделение, a.email as Email, a.phone as Телефон, a.date_in as" +
+                "\"Дата приема\", a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers " +
+                $"a left join subdivisions b on a.subdivision = b.id WHERE date_out BETWEEN '{dateTimePicker1.Value}' AND '{dateTimePicker2.Value}' ";
+             string querry_d = $" order by \"Статус\",\"Дата приема\"  asc;";
+
+            string dop_q =   $"AND b.name = '{comboBox_stats.Text}' ";
+
+
+            if (comboBox_stats.SelectedIndex == 0)
+            {
+                dtgetdata = getdata(querry_a + querry_b + querry_c + querry_d );
+                dataGridWorkers.DataSource = dtgetdata;
+
+                int count = 0;
+                int count_a = -1;
+
+                string targetValue = "Устроились";
+                string targetValue_a = "Уволились";             
+
+                foreach (DataGridViewRow row in dataGridWorkers.Rows)
+                {
+                    if (row.Cells["Статус"].Value != null && row.Cells["Статус"].Value.ToString() == targetValue)
+                    {
+                        count++;
+                    }
+                }
+
+                foreach (DataGridViewRow row in dataGridWorkers.Rows)
+                {
+                    if (row.Cells["Статус"].Value != null && row.Cells["Статус"].Value.ToString() == targetValue_a)
+                    {
+                        count_a++;
+                    }
+                }
+
+                richTextBox1.Text = $"За период с {dateTimePicker1.Value} по {dateTimePicker2.Value} на работу устроились {count} сотрудников, уволились {count_a} сотрудников";
+            }
+            else
+            {
+                dtgetdata = getdata(querry_a + dop_q + querry_b + querry_c + dop_q + querry_d);
+                dataGridWorkers.DataSource = dtgetdata;
+
+                int count = 0;
+                int count_a = -1;
+
+                string targetValue = "Устроились";
+                string targetValue_a = "Уволились";
+
+                foreach (DataGridViewRow row in dataGridWorkers.Rows)
+                {
+                    if (row.Cells["Статус"].Value != null && row.Cells["Статус"].Value.ToString() == targetValue)
+                    {
+                        count++;
+                    }
+                }
+
+                foreach (DataGridViewRow row in dataGridWorkers.Rows)
+                {
+                    if (row.Cells["Статус"].Value != null && row.Cells["Статус"].Value.ToString() == targetValue_a)
+                    {
+                        count_a++;
+                    }
+                }
+
+                richTextBox1.Text = $"За период с {dateTimePicker1.Value} по {dateTimePicker2.Value} в отдел {comboBox_stats.Text} на работу устроились {count} сотрудников, уволились {count_a} сотрудников";
+            }
+            
         }
     }
 }
