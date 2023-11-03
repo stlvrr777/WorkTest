@@ -72,48 +72,63 @@ namespace WorkTest
 
         private void button_add_Click(object sender, EventArgs e)
         {
-            connection();
-            nCmd = new NpgsqlCommand();
-            nCmd.Connection = nCon;
 
-            string sqlQuerry = "INSERT INTO workers (fio, tab_num, post, subdivision, email, phone, date_in," +
-                " status) VALUES (@fio, @tab_num, @post, (SELECT id FROM subdivisions WHERE name = @subdivision)," +
-                " @email, @phone, @date_in, (CAST(@status AS state_type)));";     
+            if (
+                string.IsNullOrWhiteSpace(textBox_fio.Text) ||
+                string.IsNullOrWhiteSpace(textBox_tab.Text) ||
+                string.IsNullOrWhiteSpace(textBox_dolzh.Text) ||
+                string.IsNullOrWhiteSpace(comboBox_podr.Text) ||
+                string.IsNullOrWhiteSpace(textBox_mail.Text) ||
+                string.IsNullOrWhiteSpace(textBox_phone.Text))
+            {
+                MessageBox.Show("Не все поля заполнены.", "Внимание!", MessageBoxButtons.OK);
+            }
+            else
+            {
+                connection();
+                nCmd = new NpgsqlCommand();
+                nCmd.Connection = nCon;
 
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@fio", NpgsqlDbType.Text));
-            nCmd.Parameters["@fio"].Value = textBox_fio.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@tab_num", NpgsqlDbType.Text));
-            nCmd.Parameters["@tab_num"].Value = textBox_tab.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@post", NpgsqlDbType.Text));
-            nCmd.Parameters["@post"].Value = textBox_dolzh.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@subdivision", NpgsqlDbType.Text));
-            nCmd.Parameters["@subdivision"].Value = comboBox_podr.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@email", NpgsqlDbType.Text));
-            nCmd.Parameters["@email"].Value = textBox_mail.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@phone", NpgsqlDbType.Text));
-            nCmd.Parameters["@phone"].Value = textBox_phone.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@date_in", NpgsqlDbType.Date));
-            nCmd.Parameters["@date_in"].Value = dateTimePicker_in.Value;        
+                string sqlQuerry = "INSERT INTO workers (fio, tab_num, post, subdivision, email, phone, date_in," +
+                    " status) VALUES (@fio, @tab_num, @post, (SELECT id FROM subdivisions WHERE name = @subdivision)," +
+                    " @email, @phone, @date_in, (CAST(@status AS state_type)));";
 
 
-            nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
-            nCmd.Parameters["@status"].Value = "Действующая";        
+                nCmd.Parameters.Add(new NpgsqlParameter("@fio", NpgsqlDbType.Text));
+                nCmd.Parameters["@fio"].Value = textBox_fio.Text;
 
-            nCmd.CommandText = sqlQuerry;
+                nCmd.Parameters.Add(new NpgsqlParameter("@tab_num", NpgsqlDbType.Text));
+                nCmd.Parameters["@tab_num"].Value = textBox_tab.Text;
 
-            NpgsqlDataReader dr = nCmd.ExecuteReader();
+                nCmd.Parameters.Add(new NpgsqlParameter("@post", NpgsqlDbType.Text));
+                nCmd.Parameters["@post"].Value = textBox_dolzh.Text;
 
-            Form1 form1 = new Form1();
-            form1.refreshGrid();
+                nCmd.Parameters.Add(new NpgsqlParameter("@subdivision", NpgsqlDbType.Text));
+                nCmd.Parameters["@subdivision"].Value = comboBox_podr.Text;
 
-            MessageBox.Show("Данные успешно добавлены.", "Успех", MessageBoxButtons.OK);
+                nCmd.Parameters.Add(new NpgsqlParameter("@email", NpgsqlDbType.Text));
+                nCmd.Parameters["@email"].Value = textBox_mail.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@phone", NpgsqlDbType.Text));
+                nCmd.Parameters["@phone"].Value = textBox_phone.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@date_in", NpgsqlDbType.Date));
+                nCmd.Parameters["@date_in"].Value = dateTimePicker_in.Value;
+
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
+                nCmd.Parameters["@status"].Value = "Действующая";
+
+                nCmd.CommandText = sqlQuerry;
+
+                NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+                Form1 form1 = new Form1();
+                form1.refreshGrid();
+
+                MessageBox.Show("Данные успешно добавлены.", "Успех", MessageBoxButtons.OK);
+            }
+            
         }
 
         

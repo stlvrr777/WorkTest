@@ -30,6 +30,22 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button_showstats = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.comboBox_stats = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.comboBox_sort = new System.Windows.Forms.ComboBox();
+            this.label_sort = new System.Windows.Forms.Label();
+            this.button_search = new System.Windows.Forms.Button();
+            this.textBox_search = new System.Windows.Forms.TextBox();
+            this.label_search = new System.Windows.Forms.Label();
+            this.button_refresh = new System.Windows.Forms.Button();
+            this.button_addworker = new System.Windows.Forms.Button();
             this.textBox_date_out = new System.Windows.Forms.TextBox();
             this.comboBox_status = new System.Windows.Forms.ComboBox();
             this.label_status = new System.Windows.Forms.Label();
@@ -55,25 +71,27 @@
             this.label_fio = new System.Windows.Forms.Label();
             this.dataGridWorkers = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button_addworker = new System.Windows.Forms.Button();
-            this.button_refresh = new System.Windows.Forms.Button();
-            this.label_search = new System.Windows.Forms.Label();
-            this.textBox_search = new System.Windows.Forms.TextBox();
-            this.button_search = new System.Windows.Forms.Button();
-            this.label_sort = new System.Windows.Forms.Label();
-            this.comboBox_sort = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox_stats = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.button_showstats = new System.Windows.Forms.Button();
+            this.button_delete_uvol = new System.Windows.Forms.Button();
+            this.dataGridView_subd = new System.Windows.Forms.DataGridView();
+            this.button_refresh_subd = new System.Windows.Forms.Button();
+            this.button_add_subd = new System.Windows.Forms.Button();
+            this.button_change_subd = new System.Windows.Forms.Button();
+            this.button_delete_subd = new System.Windows.Forms.Button();
+            this.label_id_subd = new System.Windows.Forms.Label();
+            this.textBox_idsubd = new System.Windows.Forms.TextBox();
+            this.textBox_name_subd = new System.Windows.Forms.TextBox();
+            this.label_namesubd = new System.Windows.Forms.Label();
+            this.label_headsubd = new System.Windows.Forms.Label();
+            this.comboBox_headsubd = new System.Windows.Forms.ComboBox();
+            this.comboBox_director_subd = new System.Windows.Forms.ComboBox();
+            this.label_director_subd = new System.Windows.Forms.Label();
+            this.comboBox_statesubd = new System.Windows.Forms.ComboBox();
+            this.label_statesubd = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_subd)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -89,6 +107,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1396, 792);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -132,6 +151,7 @@
             this.tabPage1.Controls.Add(this.label_tab);
             this.tabPage1.Controls.Add(this.label_fio);
             this.tabPage1.Controls.Add(this.dataGridWorkers);
+            this.tabPage1.Controls.Add(this.button_delete_uvol);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -140,13 +160,176 @@
             this.tabPage1.Text = "Сотрудники";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // button_showstats
+            // 
+            this.button_showstats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_showstats.Location = new System.Drawing.Point(1052, 414);
+            this.button_showstats.Name = "button_showstats";
+            this.button_showstats.Size = new System.Drawing.Size(75, 23);
+            this.button_showstats.TabIndex = 42;
+            this.button_showstats.Text = "Отобразить";
+            this.button_showstats.UseVisualStyleBackColor = true;
+            this.button_showstats.Click += new System.EventHandler(this.button_showstats_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.richTextBox1.Location = new System.Drawing.Point(914, 450);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(276, 296);
+            this.richTextBox1.TabIndex = 41;
+            this.richTextBox1.Text = "";
+            // 
+            // comboBox_stats
+            // 
+            this.comboBox_stats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_stats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_stats.FormattingEnabled = true;
+            this.comboBox_stats.Location = new System.Drawing.Point(914, 416);
+            this.comboBox_stats.Name = "comboBox_stats";
+            this.comboBox_stats.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_stats.TabIndex = 40;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(910, 400);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 13);
+            this.label4.TabIndex = 39;
+            this.label4.Text = "Подразделение";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(910, 356);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(66, 13);
+            this.label3.TabIndex = 38;
+            this.label3.Text = "Дата конца";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(910, 309);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.TabIndex = 37;
+            this.label2.Text = "Дата начала";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(911, 281);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 13);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Вывести статистику:";
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker2.Location = new System.Drawing.Point(914, 372);
+            this.dateTimePicker2.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(213, 20);
+            this.dateTimePicker2.TabIndex = 35;
+            this.dateTimePicker2.Value = new System.DateTime(2023, 10, 31, 0, 0, 0, 0);
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(913, 325);
+            this.dateTimePicker1.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(214, 20);
+            this.dateTimePicker1.TabIndex = 34;
+            this.dateTimePicker1.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
+            // 
+            // comboBox_sort
+            // 
+            this.comboBox_sort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_sort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_sort.FormattingEnabled = true;
+            this.comboBox_sort.Location = new System.Drawing.Point(913, 181);
+            this.comboBox_sort.Name = "comboBox_sort";
+            this.comboBox_sort.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_sort.TabIndex = 33;
+            this.comboBox_sort.SelectedIndexChanged += new System.EventHandler(this.comboBox_sort_SelectedIndexChanged);
+            // 
+            // label_sort
+            // 
+            this.label_sort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_sort.AutoSize = true;
+            this.label_sort.Location = new System.Drawing.Point(910, 154);
+            this.label_sort.Name = "label_sort";
+            this.label_sort.Size = new System.Drawing.Size(182, 13);
+            this.label_sort.TabIndex = 32;
+            this.label_sort.Text = "Отсортировать по подразделению";
+            // 
+            // button_search
+            // 
+            this.button_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_search.Location = new System.Drawing.Point(913, 83);
+            this.button_search.Name = "button_search";
+            this.button_search.Size = new System.Drawing.Size(75, 23);
+            this.button_search.TabIndex = 31;
+            this.button_search.Text = "Поиск";
+            this.button_search.UseVisualStyleBackColor = true;
+            this.button_search.Click += new System.EventHandler(this.button_search_Click);
+            // 
+            // textBox_search
+            // 
+            this.textBox_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_search.Location = new System.Drawing.Point(913, 56);
+            this.textBox_search.Name = "textBox_search";
+            this.textBox_search.Size = new System.Drawing.Size(191, 20);
+            this.textBox_search.TabIndex = 30;
+            // 
+            // label_search
+            // 
+            this.label_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_search.AutoSize = true;
+            this.label_search.Location = new System.Drawing.Point(910, 27);
+            this.label_search.Name = "label_search";
+            this.label_search.Size = new System.Drawing.Size(166, 13);
+            this.label_search.TabIndex = 29;
+            this.label_search.Text = "Введите имя или номер табеля";
+            // 
+            // button_refresh
+            // 
+            this.button_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_refresh.Location = new System.Drawing.Point(15, 576);
+            this.button_refresh.Name = "button_refresh";
+            this.button_refresh.Size = new System.Drawing.Size(86, 61);
+            this.button_refresh.TabIndex = 28;
+            this.button_refresh.Text = "Обновить";
+            this.button_refresh.UseVisualStyleBackColor = true;
+            this.button_refresh.Click += new System.EventHandler(this.button_refresh_Click);
+            // 
+            // button_addworker
+            // 
+            this.button_addworker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_addworker.Location = new System.Drawing.Point(15, 656);
+            this.button_addworker.Name = "button_addworker";
+            this.button_addworker.Size = new System.Drawing.Size(180, 62);
+            this.button_addworker.TabIndex = 27;
+            this.button_addworker.Text = "Добавить Сотрудника";
+            this.button_addworker.UseVisualStyleBackColor = true;
+            this.button_addworker.Click += new System.EventHandler(this.button_addworker_Click);
+            // 
             // textBox_date_out
             // 
             this.textBox_date_out.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_date_out.Location = new System.Drawing.Point(1202, 432);
             this.textBox_date_out.Name = "textBox_date_out";
             this.textBox_date_out.ReadOnly = true;
-            this.textBox_date_out.Size = new System.Drawing.Size(180, 20);
+            this.textBox_date_out.Size = new System.Drawing.Size(152, 20);
             this.textBox_date_out.TabIndex = 26;
             this.textBox_date_out.Click += new System.EventHandler(this.textBox_date_out_Click);
             this.textBox_date_out.DoubleClick += new System.EventHandler(this.textBox_date_out_DoubleClick);
@@ -154,6 +337,7 @@
             // comboBox_status
             // 
             this.comboBox_status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_status.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_status.Enabled = false;
             this.comboBox_status.FormattingEnabled = true;
             this.comboBox_status.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -176,6 +360,7 @@
             // 
             this.button_delete_worker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_delete_worker.BackColor = System.Drawing.Color.IndianRed;
+            this.button_delete_worker.Enabled = false;
             this.button_delete_worker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_delete_worker.Location = new System.Drawing.Point(1300, 552);
             this.button_delete_worker.Name = "button_delete_worker";
@@ -191,7 +376,7 @@
             this.dateTimePicker_out.Location = new System.Drawing.Point(1202, 432);
             this.dateTimePicker_out.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
             this.dateTimePicker_out.Name = "dateTimePicker_out";
-            this.dateTimePicker_out.Size = new System.Drawing.Size(178, 20);
+            this.dateTimePicker_out.Size = new System.Drawing.Size(152, 20);
             this.dateTimePicker_out.TabIndex = 22;
             this.dateTimePicker_out.Value = new System.DateTime(2023, 10, 31, 0, 0, 0, 0);
             this.dateTimePicker_out.Visible = false;
@@ -210,6 +395,7 @@
             // button_changeworkers
             // 
             this.button_changeworkers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_changeworkers.Enabled = false;
             this.button_changeworkers.Location = new System.Drawing.Point(1200, 505);
             this.button_changeworkers.Name = "button_changeworkers";
             this.button_changeworkers.Size = new System.Drawing.Size(180, 41);
@@ -221,6 +407,7 @@
             // comboBox_podr
             // 
             this.comboBox_podr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_podr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_podr.Enabled = false;
             this.comboBox_podr.FormattingEnabled = true;
             this.comboBox_podr.Location = new System.Drawing.Point(1202, 223);
@@ -377,6 +564,7 @@
             this.dataGridWorkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridWorkers.BackgroundColor = System.Drawing.Color.White;
             this.dataGridWorkers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridWorkers.Location = new System.Drawing.Point(-4, 0);
             this.dataGridWorkers.Name = "dataGridWorkers";
@@ -386,162 +574,189 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.comboBox_statesubd);
+            this.tabPage2.Controls.Add(this.label_statesubd);
+            this.tabPage2.Controls.Add(this.comboBox_director_subd);
+            this.tabPage2.Controls.Add(this.label_director_subd);
+            this.tabPage2.Controls.Add(this.comboBox_headsubd);
+            this.tabPage2.Controls.Add(this.label_headsubd);
+            this.tabPage2.Controls.Add(this.textBox_name_subd);
+            this.tabPage2.Controls.Add(this.label_namesubd);
+            this.tabPage2.Controls.Add(this.textBox_idsubd);
+            this.tabPage2.Controls.Add(this.label_id_subd);
+            this.tabPage2.Controls.Add(this.button_delete_subd);
+            this.tabPage2.Controls.Add(this.button_change_subd);
+            this.tabPage2.Controls.Add(this.button_add_subd);
+            this.tabPage2.Controls.Add(this.button_refresh_subd);
+            this.tabPage2.Controls.Add(this.dataGridView_subd);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1176, 596);
+            this.tabPage2.Size = new System.Drawing.Size(1388, 766);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Подразделения";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button_addworker
+            // button_delete_uvol
             // 
-            this.button_addworker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_addworker.Location = new System.Drawing.Point(15, 656);
-            this.button_addworker.Name = "button_addworker";
-            this.button_addworker.Size = new System.Drawing.Size(180, 62);
-            this.button_addworker.TabIndex = 27;
-            this.button_addworker.Text = "Добавить Сотрудника";
-            this.button_addworker.UseVisualStyleBackColor = true;
-            this.button_addworker.Click += new System.EventHandler(this.button_addworker_Click);
+            this.button_delete_uvol.Image = global::WorkTest.Properties.Resources.x;
+            this.button_delete_uvol.Location = new System.Drawing.Point(1360, 432);
+            this.button_delete_uvol.Name = "button_delete_uvol";
+            this.button_delete_uvol.Size = new System.Drawing.Size(20, 20);
+            this.button_delete_uvol.TabIndex = 43;
+            this.button_delete_uvol.UseVisualStyleBackColor = true;
+            this.button_delete_uvol.Click += new System.EventHandler(this.button_delete_uvol_Click);
             // 
-            // button_refresh
+            // dataGridView_subd
             // 
-            this.button_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_refresh.Location = new System.Drawing.Point(15, 576);
-            this.button_refresh.Name = "button_refresh";
-            this.button_refresh.Size = new System.Drawing.Size(86, 61);
-            this.button_refresh.TabIndex = 28;
-            this.button_refresh.Text = "Обновить";
-            this.button_refresh.UseVisualStyleBackColor = true;
-            this.button_refresh.Click += new System.EventHandler(this.button_refresh_Click);
+            this.dataGridView_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView_subd.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView_subd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_subd.Location = new System.Drawing.Point(-4, 0);
+            this.dataGridView_subd.Name = "dataGridView_subd";
+            this.dataGridView_subd.Size = new System.Drawing.Size(1175, 766);
+            this.dataGridView_subd.TabIndex = 0;
             // 
-            // label_search
+            // button_refresh_subd
             // 
-            this.label_search.AutoSize = true;
-            this.label_search.Location = new System.Drawing.Point(910, 27);
-            this.label_search.Name = "label_search";
-            this.label_search.Size = new System.Drawing.Size(166, 13);
-            this.label_search.TabIndex = 29;
-            this.label_search.Text = "Введите имя или номер табеля";
+            this.button_refresh_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_refresh_subd.Location = new System.Drawing.Point(15, 576);
+            this.button_refresh_subd.Name = "button_refresh_subd";
+            this.button_refresh_subd.Size = new System.Drawing.Size(86, 61);
+            this.button_refresh_subd.TabIndex = 1;
+            this.button_refresh_subd.Text = "Обновить";
+            this.button_refresh_subd.UseVisualStyleBackColor = true;
             // 
-            // textBox_search
+            // button_add_subd
             // 
-            this.textBox_search.Location = new System.Drawing.Point(913, 56);
-            this.textBox_search.Name = "textBox_search";
-            this.textBox_search.Size = new System.Drawing.Size(191, 20);
-            this.textBox_search.TabIndex = 30;
+            this.button_add_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_add_subd.Location = new System.Drawing.Point(15, 656);
+            this.button_add_subd.Name = "button_add_subd";
+            this.button_add_subd.Size = new System.Drawing.Size(180, 62);
+            this.button_add_subd.TabIndex = 2;
+            this.button_add_subd.Text = "Добавить подразделение";
+            this.button_add_subd.UseVisualStyleBackColor = true;
             // 
-            // button_search
+            // button_change_subd
             // 
-            this.button_search.Location = new System.Drawing.Point(913, 83);
-            this.button_search.Name = "button_search";
-            this.button_search.Size = new System.Drawing.Size(75, 23);
-            this.button_search.TabIndex = 31;
-            this.button_search.Text = "Поиск";
-            this.button_search.UseVisualStyleBackColor = true;
-            this.button_search.Click += new System.EventHandler(this.button_search_Click);
+            this.button_change_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_change_subd.Location = new System.Drawing.Point(1200, 505);
+            this.button_change_subd.Name = "button_change_subd";
+            this.button_change_subd.Size = new System.Drawing.Size(180, 41);
+            this.button_change_subd.TabIndex = 3;
+            this.button_change_subd.Text = "Изменить";
+            this.button_change_subd.UseVisualStyleBackColor = true;
             // 
-            // label_sort
+            // button_delete_subd
             // 
-            this.label_sort.AutoSize = true;
-            this.label_sort.Location = new System.Drawing.Point(910, 154);
-            this.label_sort.Name = "label_sort";
-            this.label_sort.Size = new System.Drawing.Size(182, 13);
-            this.label_sort.TabIndex = 32;
-            this.label_sort.Text = "Отсортировать по подразделению";
+            this.button_delete_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_delete_subd.BackColor = System.Drawing.Color.IndianRed;
+            this.button_delete_subd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_delete_subd.Location = new System.Drawing.Point(1300, 552);
+            this.button_delete_subd.Name = "button_delete_subd";
+            this.button_delete_subd.Size = new System.Drawing.Size(82, 41);
+            this.button_delete_subd.TabIndex = 4;
+            this.button_delete_subd.Text = "УДАЛИТЬ";
+            this.button_delete_subd.UseVisualStyleBackColor = false;
             // 
-            // comboBox_sort
+            // label_id_subd
             // 
-            this.comboBox_sort.FormattingEnabled = true;
-            this.comboBox_sort.Location = new System.Drawing.Point(913, 181);
-            this.comboBox_sort.Name = "comboBox_sort";
-            this.comboBox_sort.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_sort.TabIndex = 33;
-            this.comboBox_sort.SelectedIndexChanged += new System.EventHandler(this.comboBox_sort_SelectedIndexChanged);
+            this.label_id_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_id_subd.AutoSize = true;
+            this.label_id_subd.Location = new System.Drawing.Point(1199, 230);
+            this.label_id_subd.Name = "label_id_subd";
+            this.label_id_subd.Size = new System.Drawing.Size(18, 13);
+            this.label_id_subd.TabIndex = 5;
+            this.label_id_subd.Text = "ID";
             // 
-            // dateTimePicker1
+            // textBox_idsubd
             // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(913, 325);
-            this.dateTimePicker1.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(214, 20);
-            this.dateTimePicker1.TabIndex = 34;
-            this.dateTimePicker1.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
+            this.textBox_idsubd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_idsubd.Location = new System.Drawing.Point(1202, 246);
+            this.textBox_idsubd.Name = "textBox_idsubd";
+            this.textBox_idsubd.Size = new System.Drawing.Size(180, 20);
+            this.textBox_idsubd.TabIndex = 6;
             // 
-            // dateTimePicker2
+            // textBox_name_subd
             // 
-            this.dateTimePicker2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker2.Location = new System.Drawing.Point(914, 372);
-            this.dateTimePicker2.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(213, 20);
-            this.dateTimePicker2.TabIndex = 35;
-            this.dateTimePicker2.Value = new System.DateTime(2023, 10, 31, 0, 0, 0, 0);
+            this.textBox_name_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_name_subd.Location = new System.Drawing.Point(1202, 294);
+            this.textBox_name_subd.Name = "textBox_name_subd";
+            this.textBox_name_subd.Size = new System.Drawing.Size(180, 20);
+            this.textBox_name_subd.TabIndex = 8;
             // 
-            // label1
+            // label_namesubd
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(911, 281);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 13);
-            this.label1.TabIndex = 36;
-            this.label1.Text = "Вывести статистику:";
+            this.label_namesubd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_namesubd.AutoSize = true;
+            this.label_namesubd.Location = new System.Drawing.Point(1199, 278);
+            this.label_namesubd.Name = "label_namesubd";
+            this.label_namesubd.Size = new System.Drawing.Size(57, 13);
+            this.label_namesubd.TabIndex = 7;
+            this.label_namesubd.Text = "Название";
             // 
-            // label2
+            // label_headsubd
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(910, 309);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 37;
-            this.label2.Text = "Дата начала";
+            this.label_headsubd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_headsubd.AutoSize = true;
+            this.label_headsubd.Location = new System.Drawing.Point(1199, 329);
+            this.label_headsubd.Name = "label_headsubd";
+            this.label_headsubd.Size = new System.Drawing.Size(136, 13);
+            this.label_headsubd.TabIndex = 9;
+            this.label_headsubd.Text = "Головное подразделение";
             // 
-            // label3
+            // comboBox_headsubd
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(910, 356);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 13);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "Дата конца";
+            this.comboBox_headsubd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_headsubd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_headsubd.FormattingEnabled = true;
+            this.comboBox_headsubd.Location = new System.Drawing.Point(1200, 345);
+            this.comboBox_headsubd.Name = "comboBox_headsubd";
+            this.comboBox_headsubd.Size = new System.Drawing.Size(180, 21);
+            this.comboBox_headsubd.TabIndex = 10;
             // 
-            // comboBox_stats
+            // comboBox_director_subd
             // 
-            this.comboBox_stats.FormattingEnabled = true;
-            this.comboBox_stats.Location = new System.Drawing.Point(914, 416);
-            this.comboBox_stats.Name = "comboBox_stats";
-            this.comboBox_stats.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_stats.TabIndex = 40;
+            this.comboBox_director_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_director_subd.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBox_director_subd.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBox_director_subd.FormattingEnabled = true;
+            this.comboBox_director_subd.Location = new System.Drawing.Point(1200, 399);
+            this.comboBox_director_subd.Name = "comboBox_director_subd";
+            this.comboBox_director_subd.Size = new System.Drawing.Size(180, 21);
+            this.comboBox_director_subd.TabIndex = 12;
             // 
-            // label4
+            // label_director_subd
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(910, 400);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 13);
-            this.label4.TabIndex = 39;
-            this.label4.Text = "Подразделение";
+            this.label_director_subd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_director_subd.AutoSize = true;
+            this.label_director_subd.Location = new System.Drawing.Point(1199, 383);
+            this.label_director_subd.Name = "label_director_subd";
+            this.label_director_subd.Size = new System.Drawing.Size(62, 13);
+            this.label_director_subd.TabIndex = 11;
+            this.label_director_subd.Text = "Начальник";
             // 
-            // richTextBox1
+            // comboBox_statesubd
             // 
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(914, 450);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(276, 296);
-            this.richTextBox1.TabIndex = 41;
-            this.richTextBox1.Text = "";
+            this.comboBox_statesubd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_statesubd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_statesubd.FormattingEnabled = true;
+            this.comboBox_statesubd.Location = new System.Drawing.Point(1200, 453);
+            this.comboBox_statesubd.Name = "comboBox_statesubd";
+            this.comboBox_statesubd.Size = new System.Drawing.Size(180, 21);
+            this.comboBox_statesubd.TabIndex = 14;
             // 
-            // button_showstats
+            // label_statesubd
             // 
-            this.button_showstats.Location = new System.Drawing.Point(1052, 414);
-            this.button_showstats.Name = "button_showstats";
-            this.button_showstats.Size = new System.Drawing.Size(75, 23);
-            this.button_showstats.TabIndex = 42;
-            this.button_showstats.Text = "Отобразить";
-            this.button_showstats.UseVisualStyleBackColor = true;
-            this.button_showstats.Click += new System.EventHandler(this.button_showstats_Click);
+            this.label_statesubd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_statesubd.AutoSize = true;
+            this.label_statesubd.Location = new System.Drawing.Point(1199, 437);
+            this.label_statesubd.Name = "label_statesubd";
+            this.label_statesubd.Size = new System.Drawing.Size(100, 13);
+            this.label_statesubd.TabIndex = 13;
+            this.label_statesubd.Text = "Состояние записи";
             // 
             // Form1
             // 
@@ -557,6 +772,9 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_subd)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -606,6 +824,22 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button_showstats;
+        private System.Windows.Forms.Button button_delete_uvol;
+        private System.Windows.Forms.DataGridView dataGridView_subd;
+        private System.Windows.Forms.Button button_delete_subd;
+        private System.Windows.Forms.Button button_change_subd;
+        private System.Windows.Forms.Button button_add_subd;
+        private System.Windows.Forms.Button button_refresh_subd;
+        private System.Windows.Forms.Label label_id_subd;
+        private System.Windows.Forms.TextBox textBox_name_subd;
+        private System.Windows.Forms.Label label_namesubd;
+        private System.Windows.Forms.TextBox textBox_idsubd;
+        private System.Windows.Forms.ComboBox comboBox_statesubd;
+        private System.Windows.Forms.Label label_statesubd;
+        private System.Windows.Forms.ComboBox comboBox_director_subd;
+        private System.Windows.Forms.Label label_director_subd;
+        private System.Windows.Forms.ComboBox comboBox_headsubd;
+        private System.Windows.Forms.Label label_headsubd;
     }
 }
 

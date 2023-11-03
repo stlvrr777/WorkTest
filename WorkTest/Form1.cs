@@ -55,68 +55,79 @@ namespace WorkTest
 
         private void button_changeworkers_Click(object sender, EventArgs e)
         {
-            connection();
-            nCmd = new NpgsqlCommand();
-            nCmd.Connection = nCon;
-
-            string sqlQuerry_a = "UPDATE workers SET fio = @fio, tab_num = @tab_num, post = @post, " +
-                 "subdivision = (SELECT id FROM subdivisions WHERE name = @subdivision), " +
-                 "email = @email, phone = @phone, date_in = @date_in, " +
-                 $"status = (CAST(@status as \"state_type\"))";
-            string sqlQuerry_b = ", date_out = @date_out";
-            string sqlQuerry_c = " WHERE id = @id";
-            string sqlQuerry;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@fio", NpgsqlDbType.Text));
-            nCmd.Parameters["@fio"].Value = textBox_fio.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@tab_num", NpgsqlDbType.Text));
-            nCmd.Parameters["@tab_num"].Value = textBox_tab.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@post", NpgsqlDbType.Text));
-            nCmd.Parameters["@post"].Value = textBox_dolzh.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@subdivision", NpgsqlDbType.Text));
-            nCmd.Parameters["@subdivision"].Value = comboBox_podr.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@email", NpgsqlDbType.Text));
-            nCmd.Parameters["@email"].Value = textBox_mail.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@phone", NpgsqlDbType.Text));
-            nCmd.Parameters["@phone"].Value = textBox_phone.Text;   
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@date_in", NpgsqlDbType.Date));
-            nCmd.Parameters["@date_in"].Value = dateTimePicker_in.Value;
-
-            if (textBox_date_out.Visible)
-            {
-                sqlQuerry = sqlQuerry_a + sqlQuerry_c;
-                //nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
-                //nCmd.Parameters["@date_out"].Value = null;
-            }
+            if (string.IsNullOrWhiteSpace(textBox_id.Text) ||
+                string.IsNullOrWhiteSpace(textBox_fio.Text) ||
+                string.IsNullOrWhiteSpace(textBox_tab.Text) ||
+                string.IsNullOrWhiteSpace(textBox_dolzh.Text) ||
+                string.IsNullOrWhiteSpace(comboBox_podr.Text) ||
+                string.IsNullOrWhiteSpace(textBox_mail.Text) ||
+                string.IsNullOrWhiteSpace(textBox_phone.Text) ||
+                string.IsNullOrWhiteSpace(comboBox_status.Text))
+                {
+                MessageBox.Show("Не все поля заполнены.", "Внимание!", MessageBoxButtons.OK);
+                }
             else
             {
-                nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
-                nCmd.Parameters["@date_out"].Value = dateTimePicker_out.Value;
-                sqlQuerry = sqlQuerry_a + sqlQuerry_b + sqlQuerry_c;
+                connection();
+                nCmd = new NpgsqlCommand();
+                nCmd.Connection = nCon;
+
+                string sqlQuerry = "UPDATE workers SET fio = @fio, tab_num = @tab_num, post = @post, " +
+                     "subdivision = (SELECT id FROM subdivisions WHERE name = @subdivision), " +
+                     "email = @email, phone = @phone, date_in = @date_in, " +
+                     $"status = (CAST(@status as \"state_type\")), date_out = @date_out WHERE id = @id";
+
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@fio", NpgsqlDbType.Text));
+                nCmd.Parameters["@fio"].Value = textBox_fio.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@tab_num", NpgsqlDbType.Text));
+                nCmd.Parameters["@tab_num"].Value = textBox_tab.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@post", NpgsqlDbType.Text));
+                nCmd.Parameters["@post"].Value = textBox_dolzh.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@subdivision", NpgsqlDbType.Text));
+                nCmd.Parameters["@subdivision"].Value = comboBox_podr.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@email", NpgsqlDbType.Text));
+                nCmd.Parameters["@email"].Value = textBox_mail.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@phone", NpgsqlDbType.Text));
+                nCmd.Parameters["@phone"].Value = textBox_phone.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@date_in", NpgsqlDbType.Date));
+                nCmd.Parameters["@date_in"].Value = dateTimePicker_in.Value;
+
+                if (textBox_date_out.Visible)
+                {
+                    nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
+                    nCmd.Parameters["@date_out"].Value = DBNull.Value;                    
+                }
+                else
+                {
+                    nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
+                    nCmd.Parameters["@date_out"].Value = dateTimePicker_out.Value;                    
+                }
+
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
+                nCmd.Parameters["@status"].Value = comboBox_status.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@id", NpgsqlDbType.Integer));
+                nCmd.Parameters["@id"].Value = int.Parse(textBox_id.Text);
+
+                nCmd.CommandText = sqlQuerry;
+
+                NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+                MessageBox.Show("Данные успешно обновлены.", "Успех", MessageBoxButtons.OK);
+
+                refreshGrid();
+
+                //updateSql(sqlQuerry);
             }
-            
 
-            nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
-            nCmd.Parameters["@status"].Value = comboBox_status.Text;
-
-            nCmd.Parameters.Add(new NpgsqlParameter("@id", NpgsqlDbType.Integer));
-            nCmd.Parameters["@id"].Value = int.Parse(textBox_id.Text);
-
-            nCmd.CommandText = sqlQuerry;
-
-            NpgsqlDataReader dr = nCmd.ExecuteReader();
-
-            MessageBox.Show("Данные успешно обновлены.", "Успех", MessageBoxButtons.OK);
-
-            refreshGrid();
-
-            //updateSql(sqlQuerry);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -134,6 +145,22 @@ namespace WorkTest
                 "a.date_out as \"Дата увольнения\", a.status as \"Состояние записи\" from workers a left join " +
                 "subdivisions b on a.subdivision = b.id order by id asc;");
             dataGridWorkers.DataSource = dtgetdata;
+            dataGridWorkers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            foreach (DataGridViewColumn column in dataGridWorkers.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+
+            dtgetdata = getdata("select a.id, a.name as Название, b.name as \"Головное подразделение\", c.fio as Начальник, a.status as \"Состояние записи\" from Subdivisions a left join subdivisions b  on a.head_subd = b.id left join workers c on a.director = c.id order by id asc");
+            dataGridView_subd.DataSource = dtgetdata;
+            dataGridView_subd.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Для каждой колонки:
+            foreach (DataGridViewColumn column in dataGridView_subd.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
 
 
             comboBox_podr.Items.Clear();
@@ -141,7 +168,17 @@ namespace WorkTest
             comboBox_sort.Items.Clear();
             comboBox_stats.Items.Clear();
 
+            comboBox_director_subd.Items.Clear();
+            comboBox_headsubd.Items.Clear();
+            comboBox_statesubd.Items.Clear();
+
             comboBox_stats.Items.Add("Все".ToString());
+            comboBox_stats.SelectedIndex = 0;
+
+            comboBox_headsubd.Items.Add("Нет".ToString());
+            comboBox_stats.SelectedIndex = 0;
+
+            comboBox_director_subd.Items.Add("Нет".ToString());
             comboBox_stats.SelectedIndex = 0;
 
             dtgetdata = getdata("SELECT DISTINCT name FROM subdivisions ORDER BY name");
@@ -152,6 +189,7 @@ namespace WorkTest
                     comboBox_podr.Items.Add(row["name"].ToString());
                     comboBox_sort.Items.Add(row["name"].ToString());
                     comboBox_stats.Items.Add(row["name"].ToString());
+                    comboBox_headsubd.Items.Add(row["name"].ToString());
                 }
             }
 
@@ -161,8 +199,23 @@ namespace WorkTest
                 foreach (DataRow row in dtgetdata.Rows)
                 {
                     comboBox_status.Items.Add(row["name"].ToString());
+                    comboBox_statesubd.Items.Add(row["name"].ToString());
                 }
             }
+
+            dtgetdata = getdata("SELECT fio from workers ORDER by fio;");
+            if (dtgetdata.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtgetdata.Rows)
+                {
+                    comboBox_director_subd.Items.Add(row["fio"].ToString());
+
+                }
+            }
+
+
+
+
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -183,6 +236,8 @@ namespace WorkTest
                 comboBox_podr.Enabled = true;
                 comboBox_status.Enabled = true;
                 dateTimePicker_in.Enabled = true;
+                button_changeworkers.Enabled = true;
+                button_delete_worker.Enabled = true;
 
 
                 DataGridViewRow selectedRow = dataGridWorkers.Rows[e.RowIndex];            
@@ -207,7 +262,7 @@ namespace WorkTest
                 //textBox_fio.Text = selectedRow.Cells["date_out"].Value.ToString();
                 comboBox_status.Text = selectedRow.Cells["Состояние записи"].Value.ToString();
 
-                string dateoutValue = selectedRow.Cells["Дата увольнения"].Value.ToString(); // Замените "название_столбца_даты" на актуальное имя столбца с датой
+                string dateoutValue = selectedRow.Cells["Дата увольнения"].Value.ToString(); 
                 
 
                 if (DateTime.TryParse(dateoutValue, out dateout))
@@ -366,7 +421,7 @@ namespace WorkTest
                     }
                 }
 
-                richTextBox1.Text = $"За период с {dateTimePicker1.Value} по {dateTimePicker2.Value} на работу устроились {count} сотрудников, уволились {count_a} сотрудников";
+                richTextBox1.Text = $"За период с {dateTimePicker1.Value.Date.ToShortDateString()} по {dateTimePicker2.Value.Date.ToShortDateString()} сотрудников на работу \nУстроились: \n{count}; \nУволились: \n{count_a}.";
             }
             else
             {
@@ -394,10 +449,20 @@ namespace WorkTest
                         count_a++;
                     }
                 }
-
-                richTextBox1.Text = $"За период с {dateTimePicker1.Value} по {dateTimePicker2.Value} в отдел {comboBox_stats.Text} на работу устроились {count} сотрудников, уволились {count_a} сотрудников";
-            }
+                richTextBox1.Text = $"За период с {dateTimePicker1.Value.Date.ToShortDateString()} по {dateTimePicker2.Value.Date.ToShortDateString()} сотрудников на работу в отдел {comboBox_stats.Text} \nУстроились: \n{count}; \nУволились: \n{count_a}.";
+                }
             
+        }
+
+        private void button_delete_uvol_Click(object sender, EventArgs e)
+        {
+            textBox_date_out.Visible = true;
+            dateTimePicker_out.Visible = false;
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
