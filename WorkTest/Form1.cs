@@ -213,8 +213,15 @@ namespace WorkTest
                 }
             }
 
+            dtgetdata = getdata("SELECT count(id) from workers where date_out is null;");
+            if (dtgetdata.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtgetdata.Rows)
+                {
+                    label_count_all.Text = row["count"].ToString();
 
-
+                }
+            }
 
         }
 
@@ -462,6 +469,123 @@ namespace WorkTest
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void dataGridView_subd_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                //textBox_id.ReadOnly = false;
+                textBox_name_subd.ReadOnly = false;
+                comboBox_headsubd.Enabled = true;
+                comboBox_director_subd.Enabled = true;
+                comboBox_statesubd.Enabled = true;
+                
+
+
+                DataGridViewRow selectedRow = dataGridView_subd.Rows[e.RowIndex];
+
+                textBox_idsubd.Text = selectedRow.Cells["id"].Value.ToString();
+
+                textBox_name_subd.Text = selectedRow.Cells["Название"].Value.ToString();
+
+                comboBox_headsubd.Text = selectedRow.Cells["Головное подразделение"].Value.ToString();
+                comboBox_director_subd.Text = selectedRow.Cells["Начальник"].Value.ToString();
+                comboBox_statesubd.Text = selectedRow.Cells["Состояние записи"].Value.ToString();
+           
+            }
+        }
+
+        private void button_change_subd_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox_idsubd.Text) ||
+                string.IsNullOrWhiteSpace(textBox_name_subd.Text) ||
+                string.IsNullOrWhiteSpace(comboBox_headsubd.Text) ||
+                string.IsNullOrWhiteSpace(comboBox_director_subd.Text) ||
+                string.IsNullOrWhiteSpace(comboBox_statesubd.Text))
+            {
+                MessageBox.Show("Не все поля заполнены.", "Внимание!", MessageBoxButtons.OK);
+            }
+            else
+            {
+                connection();
+                nCmd = new NpgsqlCommand();
+                nCmd.Connection = nCon;
+
+                string sqlQuerry = "UPDATE subdivisions SET name = @name, head_subd = (select id from subdivisions where name = @headsubd), director = (select id from workers where fio = @director), status = (CAST(@status as \"state_type\")) WHERE id = @id";
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@id", NpgsqlDbType.Integer));
+                nCmd.Parameters["@id"].Value = int.Parse(textBox_idsubd.Text);            
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@name", NpgsqlDbType.Text));
+                nCmd.Parameters["@name"].Value = textBox_name_subd.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@headsubd", NpgsqlDbType.Text));
+                nCmd.Parameters["@headsubd"].Value = comboBox_headsubd.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@director", NpgsqlDbType.Text));
+                nCmd.Parameters["@director"].Value = comboBox_director_subd.Text;
+
+                nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
+                nCmd.Parameters["@status"].Value = comboBox_statesubd.Text;
+
+                
+
+                nCmd.CommandText = sqlQuerry;
+
+                NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+                MessageBox.Show("Данные успешно обновлены.", "Успех", MessageBoxButtons.OK);
+
+                refreshGrid();
+
+                //updateSql(sqlQuerry);
+            }
+        }
+
+        private void button_refresh_subd_Click(object sender, EventArgs e)
+        {
+            refreshGrid();
+        }
+
+        private void button_delete_subd_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox_idsubd.Text))
+            {
+
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Вы собираетесь удалить данные о сотруднике! Вы уверены? Отменить действие невозможно", "ВНИМАНИЕ", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    string sql = "DELETE FROM subdivisions WHERE id = @id";
+                    connection();
+                    nCmd = new NpgsqlCommand();
+                    nCmd.Connection = nCon;
+
+
+                    nCmd.Parameters.Add(new NpgsqlParameter("@id", NpgsqlDbType.Integer));
+                    nCmd.Parameters["@id"].Value = int.Parse(textBox_idsubd.Text);
+
+                    nCmd.CommandText = sql;
+
+                    NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+                    MessageBox.Show("Данные удалены.", "Успех", MessageBoxButtons.OK);
+
+                    refreshGrid();
+                }
+            }
+        }
+
+        private void button_add_subd_Click(object sender, EventArgs e)
+        {
+            subd_add new_form = new subd_add();
+            new_form.ShowDialog();
+
 
         }
     }

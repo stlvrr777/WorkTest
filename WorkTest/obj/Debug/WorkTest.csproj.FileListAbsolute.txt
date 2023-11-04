@@ -42,3 +42,4 @@ C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.Suggested
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.exe.config
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.CopyComplete
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.worker_add.resources
+C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.subd_add.resources

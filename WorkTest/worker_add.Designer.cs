@@ -57,6 +57,7 @@
             // 
             // comboBox_podr
             // 
+            this.comboBox_podr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_podr.FormattingEnabled = true;
             this.comboBox_podr.Location = new System.Drawing.Point(89, 193);
             this.comboBox_podr.Name = "comboBox_podr";
@@ -203,7 +204,7 @@
             this.Controls.Add(this.label_tab);
             this.Controls.Add(this.label_fio);
             this.Name = "worker_add";
-            this.Text = "worker_add";
+            this.Text = "Добавить сотрудника";
             this.Load += new System.EventHandler(this.worker_add_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
