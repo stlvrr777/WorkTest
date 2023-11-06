@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label_count_all = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.button_showstats = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.comboBox_stats = new System.Windows.Forms.ComboBox();
@@ -87,13 +89,22 @@
             this.button_add_subd = new System.Windows.Forms.Button();
             this.button_refresh_subd = new System.Windows.Forms.Button();
             this.dataGridView_subd = new System.Windows.Forms.DataGridView();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label_count_all = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button_pick = new System.Windows.Forms.Button();
+            this.dataGridView_import = new System.Windows.Forms.DataGridView();
+            this.comboBox_sheet = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox_file_path = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button_import = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_subd)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_import)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -103,6 +114,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(2, 3);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
@@ -163,6 +175,27 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Сотрудники";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label_count_all
+            // 
+            this.label_count_all.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_count_all.AutoSize = true;
+            this.label_count_all.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_count_all.Location = new System.Drawing.Point(914, 41);
+            this.label_count_all.Name = "label_count_all";
+            this.label_count_all.Size = new System.Drawing.Size(57, 20);
+            this.label_count_all.TabIndex = 45;
+            this.label_count_all.Text = "label6";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(913, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(107, 13);
+            this.label5.TabIndex = 44;
+            this.label5.Text = "Всего сотрудников:";
             // 
             // button_showstats
             // 
@@ -330,10 +363,12 @@
             // textBox_date_out
             // 
             this.textBox_date_out.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_date_out.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_date_out.ForeColor = System.Drawing.Color.DarkGray;
             this.textBox_date_out.Location = new System.Drawing.Point(1202, 432);
             this.textBox_date_out.Name = "textBox_date_out";
             this.textBox_date_out.ReadOnly = true;
-            this.textBox_date_out.Size = new System.Drawing.Size(152, 20);
+            this.textBox_date_out.Size = new System.Drawing.Size(177, 20);
             this.textBox_date_out.TabIndex = 26;
             this.textBox_date_out.Click += new System.EventHandler(this.textBox_date_out_Click);
             this.textBox_date_out.DoubleClick += new System.EventHandler(this.textBox_date_out_DoubleClick);
@@ -487,11 +522,11 @@
             // 
             this.label_dateout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label_dateout.AutoSize = true;
-            this.label_dateout.Location = new System.Drawing.Point(1199, 416);
+            this.label_dateout.Location = new System.Drawing.Point(1195, 416);
             this.label_dateout.Name = "label_dateout";
-            this.label_dateout.Size = new System.Drawing.Size(95, 13);
+            this.label_dateout.Size = new System.Drawing.Size(194, 13);
             this.label_dateout.TabIndex = 8;
-            this.label_dateout.Text = "Дата увольнения";
+            this.label_dateout.Text = "Дата увольнения (Нажмите дважды)";
             // 
             // label_datein
             // 
@@ -578,6 +613,7 @@
             // 
             // button_delete_uvol
             // 
+            this.button_delete_uvol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_delete_uvol.Image = global::WorkTest.Properties.Resources.x;
             this.button_delete_uvol.Location = new System.Drawing.Point(1360, 432);
             this.button_delete_uvol.Name = "button_delete_uvol";
@@ -771,24 +807,94 @@
             this.dataGridView_subd.TabIndex = 0;
             this.dataGridView_subd.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_subd_CellClick);
             // 
-            // label5
+            // tabPage3
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(913, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 13);
-            this.label5.TabIndex = 44;
-            this.label5.Text = "Всего сотрудников:";
+            this.tabPage3.Controls.Add(this.label8);
+            this.tabPage3.Controls.Add(this.button_import);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.textBox_file_path);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.comboBox_sheet);
+            this.tabPage3.Controls.Add(this.dataGridView_import);
+            this.tabPage3.Controls.Add(this.button_pick);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1388, 766);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Импорт";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label_count_all
+            // button_pick
             // 
-            this.label_count_all.AutoSize = true;
-            this.label_count_all.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_count_all.Location = new System.Drawing.Point(914, 41);
-            this.label_count_all.Name = "label_count_all";
-            this.label_count_all.Size = new System.Drawing.Size(57, 20);
-            this.label_count_all.TabIndex = 45;
-            this.label_count_all.Text = "label6";
+            this.button_pick.Location = new System.Drawing.Point(1030, 362);
+            this.button_pick.Name = "button_pick";
+            this.button_pick.Size = new System.Drawing.Size(160, 40);
+            this.button_pick.TabIndex = 0;
+            this.button_pick.Text = "Выбрать";
+            this.button_pick.UseVisualStyleBackColor = true;
+            this.button_pick.Click += new System.EventHandler(this.button_pick_Click);
+            // 
+            // dataGridView_import
+            // 
+            this.dataGridView_import.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_import.Location = new System.Drawing.Point(17, 33);
+            this.dataGridView_import.Name = "dataGridView_import";
+            this.dataGridView_import.Size = new System.Drawing.Size(1242, 312);
+            this.dataGridView_import.TabIndex = 2;
+            // 
+            // comboBox_sheet
+            // 
+            this.comboBox_sheet.FormattingEnabled = true;
+            this.comboBox_sheet.Location = new System.Drawing.Point(99, 416);
+            this.comboBox_sheet.Name = "comboBox_sheet";
+            this.comboBox_sheet.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_sheet.TabIndex = 3;
+            this.comboBox_sheet.SelectedIndexChanged += new System.EventHandler(this.comboBox_sheet_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(35, 419);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Лист №:";
+            // 
+            // textBox_file_path
+            // 
+            this.textBox_file_path.Location = new System.Drawing.Point(99, 373);
+            this.textBox_file_path.Name = "textBox_file_path";
+            this.textBox_file_path.ReadOnly = true;
+            this.textBox_file_path.Size = new System.Drawing.Size(866, 20);
+            this.textBox_file_path.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(35, 373);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(36, 13);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Файл";
+            // 
+            // button_import
+            // 
+            this.button_import.Location = new System.Drawing.Point(291, 414);
+            this.button_import.Name = "button_import";
+            this.button_import.Size = new System.Drawing.Size(75, 23);
+            this.button_import.TabIndex = 7;
+            this.button_import.Text = "Импорт";
+            this.button_import.UseVisualStyleBackColor = true;
+            this.button_import.Click += new System.EventHandler(this.button_import_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(38, 492);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(0, 13);
+            this.label8.TabIndex = 8;
             // 
             // Form1
             // 
@@ -807,6 +913,9 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_subd)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_import)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -874,6 +983,15 @@
         private System.Windows.Forms.Label label_headsubd;
         private System.Windows.Forms.Label label_count_all;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button button_pick;
+        private System.Windows.Forms.DataGridView dataGridView_import;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBox_file_path;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox_sheet;
+        private System.Windows.Forms.Button button_import;
+        private System.Windows.Forms.Label label8;
     }
 }
 

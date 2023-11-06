@@ -38,8 +38,14 @@ C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\System.Text.Json.xml
 C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\System.Threading.Channels.xml
 C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\System.ValueTuple.xml
-C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.SuggestedBindingRedirects.cache
-C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.exe.config
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.csproj.CopyComplete
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.worker_add.resources
 C:\Users\ivan\source\repos\WorkTest\WorkTest\obj\Debug\WorkTest.subd_add.resources
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\ExcelDataReader.DataSet.dll
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\ExcelDataReader.dll
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\Z.Dapper.Plus.dll
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\ExcelDataReader.pdb
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\ExcelDataReader.xml
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\ExcelDataReader.DataSet.pdb
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\ExcelDataReader.DataSet.xml
+C:\Users\ivan\source\repos\WorkTest\WorkTest\bin\Debug\Z.Dapper.Plus.xml

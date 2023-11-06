@@ -1,10 +1,13 @@
-﻿using Npgsql;
+﻿using ExcelDataReader;
+using Npgsql;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -278,11 +281,13 @@ namespace WorkTest
                     dateTimePicker_out.Value = dateout;
                     dateTimePicker_out.Visible = true;
                     textBox_date_out.Visible = false;
+                    //button_delete_uvol.Visible = true;
                 }
                 else
                 {
                     dateTimePicker_out.Visible = false;
                     textBox_date_out.Visible = true;
+
                 }
                 
                 //textBox_fio.Text = selectedRow.Cells["date_out"].Value.ToString();
@@ -586,6 +591,163 @@ namespace WorkTest
             subd_add new_form = new subd_add();
             new_form.ShowDialog();
 
+
+        }
+
+        DataTableCollection tableCollection;
+
+        private void button_pick_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Выберите файл .xlsx";
+                openFileDialog.Filter = "Файлы Excel (.xlsx)|*.xlsx";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    textBox_file_path.Text = openFileDialog.FileName;
+
+                    using (var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read)) 
+                    {
+                        using (IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                            {
+                                ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                                { UseHeaderRow = true }
+
+                            });
+
+                            tableCollection = result.Tables;
+                            comboBox_sheet.Items.Clear();
+                            foreach (DataTable table in tableCollection)
+                                comboBox_sheet.Items.Add(table.TableName);
+
+
+                            
+                        }
+                    }
+
+                }
+            }
+
+
+        }
+
+        private void comboBox_sheet_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedSheet = comboBox_sheet.SelectedItem.ToString();
+
+            // Получаем таблицу данных для выбранного листа
+            DataTable dt = tableCollection[selectedSheet];
+
+            // Привязываем DataTable к DataGridView
+            dataGridView_import.DataSource = dt;
+        }
+
+        private void button_import_Click(object sender, EventArgs e)
+        {
+            if (comboBox_sheet.SelectedIndex == 0) 
+            {
+                foreach (DataGridViewRow row in dataGridView_import.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        connection();
+                        nCmd = new NpgsqlCommand();
+                        nCmd.Connection = nCon;
+
+                        string sqlQuerry = "INSERT INTO workers (fio, tab_num, post, subdivision, email, phone, date_in," +
+                            " status) VALUES (@fio, @tab_num, @post, (SELECT id FROM subdivisions WHERE name = @subdivision limit 1)," +
+                            " @email, @phone, @date_in, (CAST(@status AS state_type)));";
+
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@fio", NpgsqlDbType.Text));
+                        nCmd.Parameters["@fio"].Value = row.Cells[1].Value.ToString();
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@tab_num", NpgsqlDbType.Text));
+                        nCmd.Parameters["@tab_num"].Value = row.Cells[2].Value.ToString();
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@post", NpgsqlDbType.Text));
+                        nCmd.Parameters["@post"].Value = row.Cells[3].Value.ToString();
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@subdivision", NpgsqlDbType.Text));
+                        nCmd.Parameters["@subdivision"].Value = row.Cells[4].Value.ToString();
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@email", NpgsqlDbType.Text));
+                        nCmd.Parameters["@email"].Value = row.Cells[5].Value.ToString();
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@phone", NpgsqlDbType.Text));
+                        nCmd.Parameters["@phone"].Value = row.Cells[6].Value.ToString();
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@date_in", NpgsqlDbType.Date));
+                        nCmd.Parameters["@date_in"].Value = DateTime.Parse(row.Cells[7].Value.ToString());
+
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@status", NpgsqlDbType.Varchar));
+                        nCmd.Parameters["@status"].Value = "Действующая";
+
+
+                        if (string.IsNullOrWhiteSpace(row.Cells[8].Value.ToString()))
+                        {
+                            nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
+                            nCmd.Parameters["@date_out"].Value = DBNull.Value;
+                        }
+                        else
+                        {
+                            nCmd.Parameters.Add(new NpgsqlParameter("@date_out", NpgsqlDbType.Date));
+                            nCmd.Parameters["@date_out"].Value = DateTime.Parse(row.Cells[8].Value.ToString());
+                        }
+
+                        nCmd.CommandText = sqlQuerry;
+
+                        NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+                       
+
+                        
+                    }
+
+                }
+                MessageBox.Show("Данные успешно добавлены.", "Успех", MessageBoxButtons.OK);
+            }
+
+            else
+            {
+                foreach (DataGridViewRow row in dataGridView_import.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        connection();
+                        nCmd = new NpgsqlCommand();
+                        nCmd.Connection = nCon;
+
+                        string sqlQuerry = "INSERT INTO subdivisions (name, head_subd) VALUES (@name, (SELECT id FROM subdivisions WHERE name = @head_subd limit 1));";
+
+
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@head_subd", NpgsqlDbType.Text));
+                        nCmd.Parameters["@head_subd"].Value = row.Cells[2].Value.ToString();
+
+
+                        nCmd.Parameters.Add(new NpgsqlParameter("@name", NpgsqlDbType.Text));
+                        nCmd.Parameters["@name"].Value = row.Cells[1].Value.ToString();
+
+                        nCmd.CommandText = sqlQuerry;
+
+                        NpgsqlDataReader dr = nCmd.ExecuteReader();
+
+
+
+
+                    }
+
+                }
+                MessageBox.Show("Данные успешно добавлены.", "Успех", MessageBoxButtons.OK);
+            }
+
+            
 
         }
     }
